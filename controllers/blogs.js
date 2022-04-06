@@ -1,4 +1,6 @@
 const Blog = require("../models/blogs.js");
+const Like = require("../models/likes.js");
+const Comment = require("../models/comments.js");
 
 exports.createBlog = async(req,res)=>{
   try{
@@ -68,4 +70,33 @@ exports.updateBlog = async(req,res)=>{
   catch(error){
     return res.status(400).send({error: "Blog does not exist"});
  }
+}
+
+exports.likeBlog = async(req,res)=>{
+  try{
+    let blog =  await Blog.findOne({_id: req.params.blogId});
+
+    if(blog){
+      let liked = await Like.findOne({blogId: req.params.blogId, userId: req.params.userId});
+
+      if(liked?.length>0){
+       let like = new Like({
+         userId: req.params.userId,
+         blogId: req.params.blogId
+       });
+
+       await like.save();
+ 
+       return res.send("Like added");
+      }
+      
+      return res.send();
+
+    }
+    
+    return res.status(400).send({error: "Blog does not exist"});
+  }
+  catch(error){
+    return res.status(400).send({error: "Blog does not exist"});
+  }
 }
