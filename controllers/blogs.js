@@ -1,6 +1,4 @@
 const Blog = require("../models/blogs.js");
-const Like = require("../models/likes.js");
-const Comment = require("../models/comments.js");
 
 exports.createBlog = async(req,res)=>{
   try{
@@ -36,7 +34,7 @@ exports.getBlogs = async(req,res)=>{
 exports.deleteBlog = async(req,res)=>{
     try{
         await Blog.deleteOne({_id: req.params.id});
-        return res.status(204).send();
+        return res.status(204).send("Blog deleted successfully");
     }
     catch(error){
        return res.status(400).send({error: "Blog does not exist"});
@@ -77,17 +75,13 @@ exports.likeBlog = async(req,res)=>{
     let blog =  await Blog.findOne({_id: req.params.blogId});
 
     if(blog){
-      let liked = await Like.findOne({blogId: req.params.blogId, userId: req.params.userId});
+      if(!blog?.likes?.includes(req.params.userId)){
 
-      if(liked?.length>0){
-       let like = new Like({
-         userId: req.params.userId,
-         blogId: req.params.blogId
+      await Blog.updateOne({_id: req.params.blogId},{
+         $push: {likes: req.params.userId}
        });
-
-       await like.save();
  
-       return res.send("Like added");
+       return res.send("Like added successfully!");
       }
       
       return res.send();
@@ -97,6 +91,28 @@ exports.likeBlog = async(req,res)=>{
     return res.status(400).send({error: "Blog does not exist"});
   }
   catch(error){
+    return res.status(400).send({error: "Blog does not exist"});
+  }
+}
+
+exports.commentBlog = async(req,res)=>{
+  try{
+    let blog =  await Blog.findOne({_id: req.params.blogId});
+
+    if(blog){
+
+      await Blog.updateOne({_id: req.params.blogId},{
+         $push: {comments: req.body}
+       });
+ 
+       return res.send("Comment added successfully!");
+
+    }
+    
+    return res.status(400).send({error: "Blog does not exist"});
+  }
+  catch(error){
+    console.log(error)
     return res.status(400).send({error: "Blog does not exist"});
   }
 }

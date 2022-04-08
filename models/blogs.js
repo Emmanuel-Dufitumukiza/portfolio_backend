@@ -17,7 +17,18 @@ const blogSchema = mongoose.Schema({
   filePublicId: {
     type: String,
     required: true
-  }
+  },
+  comments: [
+      {
+        userId: {
+            type: String
+        },
+        comment: {
+            type: String
+        }
+      }
+  ],
+  likes: []
 },{timestamps: true});
 
 module.exports = mongoose.model("Blog", blogSchema);
