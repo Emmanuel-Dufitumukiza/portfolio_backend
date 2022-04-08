@@ -60,7 +60,7 @@ exports.Login = (req, res) => {
         return res.send({ error: "Incorrect email or password" });
       }
     });
-  };
+};
 
 exports.getUser = async (req, res) => {
     try {
@@ -82,3 +82,44 @@ exports.getAllUsers = async (req, res) => {
      return res.status(400).send(error);
  }
 };
+
+exports.updateUser = async(req,res)=>{
+  try{
+
+    let user = await User.findOne({_id: req.params.id});
+    if(req.body.username){
+      user.username = req.body.username;
+    }
+
+    if(req.body.profileImage){
+      user.profileImage = req.body.profileImage;
+    }
+    
+    if(req.body.password && req.body.currentPassword){
+
+      const valid = bcrypt.compareSync(`${req.body.currentPassword}`, user.password);
+
+      if(!valid){
+        return res.status(400).send({error: "Current Password Is incorrect"})
+      }
+
+      const salt = bcrypt.genSaltSync(10);
+      const hash = bcrypt.hashSync(
+        `${req.body.password}`,
+        salt
+      );
+
+      req.body.password = hash;
+      user.password = req.body.password;
+    }
+
+    await user.save();
+
+    return res.send(user);
+
+}
+catch(error){
+    console.log(error)
+    return res.status(400).send(error);
+}
+}

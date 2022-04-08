@@ -22,6 +22,10 @@ const Schema = mongoose.Schema({
         type: String,
         default: null
     },
+    role: {
+        type: String,
+        default: null
+    },
     profileImage: {
           public_id: {
             type: String,
