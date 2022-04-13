@@ -22,6 +22,22 @@
           "description": "Find out more",
           "url": "http://swagger.io"
         }
+      },
+      {
+        "name": "Users",
+        "description": "all Apis which are related to users",
+        "externalDocs": {
+          "description": "Find out more",
+          "url": "http://swagger.io"
+        }
+      },
+      {
+        "name": "Contact Message",
+        "description": "all Apis which are related to sending contact message",
+        "externalDocs": {
+          "description": "Find out more",
+          "url": "http://swagger.io"
+        }
       }
     ],
     "schemes": ["http"],
@@ -32,6 +48,128 @@
           "summary": "Get all blogs",
           "description": "Get all blogs",
           "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "successful operation"
+            },
+            "400": {
+              "description": "bad request"
+            }
+          }
+        }
+      },
+      "/api/blogs/delete/{id}": {
+        "delete": {
+          "tags": ["Blogs"],
+          "summary": "Deleting a blog",
+          "description": "Deleting a blog",
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "the id of the blog",
+              "required": true
+            },
+              {
+                "in": "header",
+                "name": "Authorization",
+                "description": "bearer token for user authorization",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation"
+            },
+            "400": {
+              "description": "bad request"
+            }
+          }
+        }
+      },
+      "/api/blogs/like/{userId}/{blogId}": {
+        "patch": {
+          "tags": ["Blogs"],
+          "summary": "Liking a blog",
+          "description": "Liking a blog",
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "userId",
+              "description": "your id",
+              "required": true
+            },
+            {
+              "in": "path",
+              "name": "blogId",
+              "description": "the id of the blog",
+              "required": true
+            },
+              {
+                "in": "header",
+                "name": "Authorization",
+                "description": "bearer token for user authorization",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation"
+            },
+            "400": {
+              "description": "bad request"
+            }
+          }
+        }
+      },
+      "/api/blogs/comment/{blogId}": {
+        "patch": {
+          "tags": ["Blogs"],
+          "summary": "Liking a blog",
+          "description": "Liking a blog",
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "blogId",
+              "description": "the id of the blog",
+              "required": true
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "comment array that needs to be added to the database",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "string"
+                  },
+                  "comment": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+              {
+                "in": "header",
+                "name": "Authorization",
+                "description": "bearer token for user authorization",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+          ],
           "responses": {
             "200": {
               "description": "successful operation"
@@ -65,6 +203,291 @@
               }
             }
           }
+      },
+      "/api/blogs/new": {
+        "post": {
+          "tags": ["Blogs"],
+          "summary": "Register new blog",
+          "description": "Register new blog",
+          "consumes": ["application/json"],
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Blog object that needs to be added to the database",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "text": {
+                    "type": "string"
+                  },
+                  "fileUrl": {
+                    "type": "string"
+                  },
+                  "filePublicId": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+              {
+                "in": "header",
+                "name": "Authorization",
+                "description": "bearer token for user authorization",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation"
+            },
+            "400": {
+              "description": "bad request"
+            }
+          }
+        }
+      },
+      "/api/register": {
+        "post": {
+          "tags": ["Users"],
+          "summary": "Register new user",
+          "description": "Register new user",
+          "consumes": ["application/json"],
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "User object that needs to be added to the database",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation"
+            },
+            "400": {
+              "description": "bad request"
+            },
+            "404": {
+              "description": "Not found"
+            }
+          }
+        }
+      },
+      "/api/login": {
+        "post": {
+          "tags": ["Users"],
+          "summary": "Login",
+          "description": "users login",
+          "consumes": ["application/json"],
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Login",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation"
+            },
+            "400": {
+              "description": "bad request"
+            },
+            "404": {
+              "description": "Not found"
+            }
+          }
+        }
+      },
+      "/api/users/update/{id}": {
+        "patch": {
+          "tags": ["Users"],
+          "summary": "Update user",
+          "description": "updating user profile",
+          "consumes": ["application/json"],
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "the id of the user to update",
+              "required": true
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "update user profile",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "required": false
+                  },
+                  "password": {
+                    "type": "string",
+                    "required": false
+                  },
+                  "currentPassword": {
+                    "type": "string"
+                  },
+                  "profileImage": {
+                    "type": "object",
+                    "required": false,
+                    "properties": {
+                      "fileUrl": {
+                        "type": "string"
+                      },
+                      "filePublicId": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "in": "header",
+              "name": "Authorization",
+              "description": "bearer token for user authorization",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation"
+            },
+            "400": {
+              "description": "bad request"
+            },
+            "404": {
+              "description": "Not found"
+            }
+          }
+        }
+      },
+      "/api/users": {
+        "get": {
+          "tags": ["Users"],
+          "summary": "Get all users",
+          "description": "Get all users ho have an account",
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "successful operation"
+            },
+            "400": {
+              "description": "bad request"
+            }
+          }
+        }
+      },
+      "/api/users/{id}": {
+        "get": {
+            "tags": ["Users"],
+            "summary": "getting single user",
+            "description": "get single user",
+            "produces": ["application/json"],
+            "parameters": [
+              {
+                "in": "path",
+                "name": "id",
+                "description": "the id of the blog",
+                "required": true
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "successful operation"
+              },
+              "400": {
+                "description": "bad request"
+              }
+            }
+          }
+      },
+      "/api/sendMessage": {
+        "post": {
+          "tags": ["Contact Message"],
+          "summary": "Contact Message",
+          "description": "users login",
+          "consumes": ["application/json"],
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Contact Message",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "names": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation"
+            },
+            "400": {
+              "description": "bad request"
+            },
+            "404": {
+              "description": "Not found"
+            }
+          }
+        }
       },
     "externalDocs": {
       "description": "Find out more about Swagger",
