@@ -91,6 +91,7 @@ exports.updateUser = async(req,res)=>{
   try{
 
     let user = await User.findOne({_id: req.params.id});
+    
     if(req.body.username){
       user.username = req.body.username;
     }
