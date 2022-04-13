@@ -37,29 +37,33 @@ exports.Register = async(req,res)=>{
 }
 
 exports.Login = (req, res) => {
-    let { email, password } = req.body;
-    email = req.body.email.toLowerCase()
-  
-    User.findOne({ email }).then((result) => {
-      if (result) {
-        let dbPass = result.password;
-        const valid = bcrypt.compareSync(`${password}`, dbPass);
-  
-        if (valid) {
-          const userId = result._id;
-          const token = jwt.sign(
-            { userId },
-            "e-portfolio-2022-api-tkn"
-          );
-  
-          return res.send({ error: false, token: token, user: result });
-        } else {
-          return res.send({ error: "Incorrect email or password" });
-        }
+if(req.body){
+  let { email, password } = req.body;
+  email = req.body.email?.toLowerCase()
+
+  User.findOne({ email }).then((result) => {
+    if (result) {
+      let dbPass = result.password;
+      const valid = bcrypt.compareSync(`${password}`, dbPass);
+
+      if (valid) {
+        const userId = result._id;
+        const token = jwt.sign(
+          { userId },
+          "e-portfolio-2022-api-tkn"
+        );
+
+        return res.send({ error: false, token: token, user: result });
       } else {
         return res.send({ error: "Incorrect email or password" });
       }
-    });
+    } else {
+      return res.send({ error: "Incorrect email or password" });
+    }
+  });
+}else{
+  return res.send("Email And Password Are required")
+}
 };
 
 exports.getUser = async (req, res) => {
