@@ -17,7 +17,7 @@
     "tags": [
       {
         "name": "Blogs",
-        "description": "all APIs related to blogs",
+        "description": "all Apis which are related to blogs",
         "externalDocs": {
           "description": "Find out more",
           "url": "http://swagger.io"
@@ -45,7 +45,7 @@
       "/api/blogs/{id}": {
         "get": {
             "tags": ["Blogs"],
-            "summary": "get single blog",
+            "summary": "getting single blog",
             "description": "get single blog",
             "produces": ["application/json"],
             "parameters": [
