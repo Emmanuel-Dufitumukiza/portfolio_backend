@@ -9,7 +9,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 const cors = require("cors");
 
-mongoose.connect("mongodb://localhost:27017/nodejs",{
+mongoose.connect(process.env.DB_URL,{
     useNewUrlParser: true
 })
 .then(()=>{
@@ -22,6 +22,10 @@ console.log("Connected to DB")
     app.use(cors())
     const port = process.env.PORT;
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+    app.get("/", (req,res)=>{
+        return res.send("Welcome to My Portfolio APIs")
+    })
 
     app.use("/api", blogsRoutes);
     app.use("/api", messageRoutes);
