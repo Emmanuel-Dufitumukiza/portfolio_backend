@@ -40,8 +40,7 @@ const Schema = mongoose.Schema({
 }
 )
 
-const User = mongoose.model("User", Schema);
-module.exports = User;
+module.exports = mongoose.model("User", Schema);
 
 const validateSchema = Joi.object({
     username: Joi.string().min(3).max(60).required(),
