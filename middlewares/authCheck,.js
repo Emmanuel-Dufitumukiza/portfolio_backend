@@ -4,7 +4,7 @@ module.exports = function (req, res, next){
     const token = req.header('Authorization')
 
     if(!token){
-        return res.status(200).send("Access Denied! You need to login first")
+        return res.status(400).send("Access Denied! You need to login first")
     }
 
     try{
@@ -14,11 +14,11 @@ module.exports = function (req, res, next){
             return next()
             }
             if(err){
-                return res.status(200).send("Invalid Token")
+                return res.status(400).send("Invalid Token")
             }
         })
     }
     catch(ex){      
-       return res.status(200).send("Invalid Token")
+       return res.status(400).send("Invalid Token")
     }
 }

@@ -13,6 +13,10 @@ mongoose.connect("mongodb://localhost:27017/nodejs",{
     useNewUrlParser: true
 })
 .then(()=>{
+console.log("Connected to DB")
+})
+.catch(error=>console.log(error))
+
     const app = express();
     app.use(bodyParser.json());
     app.use(cors())
@@ -23,8 +27,6 @@ mongoose.connect("mongodb://localhost:27017/nodejs",{
     app.use("/api", messageRoutes);
     app.use("/api", authRoutes);
 
-    app.listen(port, ()=>{
+   module.exports = app.listen(port, ()=>{
         console.log("Server is started on port "+port);
-    })
-})
-.catch(error=>console.log(error))
+   })
