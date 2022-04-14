@@ -34,10 +34,10 @@ exports.getBlogs = async(req,res)=>{
 exports.deleteBlog = async(req,res)=>{
     try{
         await Blog.deleteOne({_id: req.params.id});
-        return res.status(204).send("Blog deleted successfully");
+        return res.status(200).send("Blog deleted successfully");
     }
     catch(error){
-       return res.status(400).send({error: "Blog does not exist"});
+       return res.status(400).send("Blog does not exist");
     }
 }
 
@@ -47,7 +47,7 @@ exports.singleBlog = async(req,res)=>{
         return res.send(blog);
     }
     catch(error){
-        return res.status(400).send({error: "Blog does not exist"});
+        return res.status(400).send("Blog does not exist");
      }
 }
 
@@ -66,7 +66,7 @@ exports.updateBlog = async(req,res)=>{
     return res.send(blog);
   }
   catch(error){
-    return res.status(400).send({error: "Blog does not exist"});
+    return res.status(400).send("Blog does not exist");
  }
 }
 
