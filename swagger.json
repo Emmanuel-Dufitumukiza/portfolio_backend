@@ -13,7 +13,7 @@
         "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
       }
     },
-    "host": "https://emmanueldufitumukiza.herokuapp.com",
+    "host": "emmanueldufitumukiza.herokuapp.com",
     "tags": [
       {
         "name": "Blogs",
@@ -40,7 +40,7 @@
         }
       }
     ],
-    "schemes": ["http"],
+    "schemes": ["https"],
     "paths": {
       "/api/blogs": {
         "get": {
