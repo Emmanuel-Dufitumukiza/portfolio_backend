@@ -55,14 +55,14 @@ if(req.body){
 
         return res.send({ error: false, token: token, user: result });
       } else {
-        return res.send({ error: "Incorrect email or password" });
+        return res.status(400).send({ error: "Incorrect email or password" });
       }
     } else {
-      return res.send({ error: "Incorrect email or password" });
+      return res.status(400).send({ error: "Incorrect email or password" });
     }
   });
 }else{
-  return res.send("Email And Password Are required")
+  return res.status(400).send("Email And Password Are required")
 }
 };
 
@@ -120,7 +120,7 @@ exports.updateUser = async(req,res)=>{
 
     await user.save();
 
-    return res.send(user);
+    return res.send({user: user});
 
 }
 catch(error){

@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start": "node index.js",
-    "test": "mocha"
+    "test": "mocha --timeout 20000"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
