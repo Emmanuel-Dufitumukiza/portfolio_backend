@@ -19,11 +19,12 @@ console.log("Connected to DB")
 
     const app = express();
     app.use(bodyParser.json());
+    app.use(express.urlencoded({extended: true}));
     app.use(cors())
     const port = process.env.PORT;
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-    app.get("/", (req,res)=>{
+    app.get("/", async (req,res)=>{
         return res.send("Welcome to My Portfolio APIs")
     })
 
