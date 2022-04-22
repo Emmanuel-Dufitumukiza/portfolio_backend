@@ -17,6 +17,11 @@
    npm start
    ```
 
+2. Run tests
+   ```sh
+   npm test
+   ```
+
 ### Built With
 
 <div>
