@@ -2,7 +2,7 @@ const Blog = require("../models/blogs.js");
 
 exports.createBlog = async(req,res)=>{
   try{
-
+console.log(req.body)
    let {title,text,filePublicId,fileUrl} = req.body;
 
    let post = new Blog({
@@ -17,6 +17,7 @@ exports.createBlog = async(req,res)=>{
    return res.send(post);
   }
   catch(error){
+    console.log(error)
     return res.status(400).send(error);
   }
 }
