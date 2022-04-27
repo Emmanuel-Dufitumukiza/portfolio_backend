@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/Emmanuel-Dufitumukiza/portfolio_backend.svg?style=svg)](https://circleci.com/gh/circleci/circleci-docs)
+
 <div align="center">
   <h3 align="center">Portfolio Backend</h3>
 </div>
