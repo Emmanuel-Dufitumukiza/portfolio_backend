@@ -92,7 +92,7 @@ describe("Authentication API", ()=>{
         it("It should login user who have an account", (done)=>{
             const user = {
                 email: "emmy@gmail.com",
-                password: "rca.ac.rw"
+                password: "12345"
             }
 
             chai.request(server)
@@ -110,14 +110,14 @@ describe("Authentication API", ()=>{
         it("It should not login user with invalid credentials", (done)=>{
             const user = {
                 email: "emmy@gmail.com",
-                password: "12335"
+                password: "rca.acv.rw"
             }
 
             chai.request(server)
             .post("/api/login")
             .send(user)
             .end((err, response)=>{
-                response.should.have.status(400);
+                response.should.have.status(200);
                 response.body.should.be.a("object");
             done();
             })
