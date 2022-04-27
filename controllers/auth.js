@@ -55,10 +55,10 @@ if(req.body){
 
         return res.send({ error: false, token: token, user: result });
       } else {
-        return res.status(400).send({ error: "Incorrect email or password" });
+        return res.status(200).send({ error: "Incorrect email or password" });
       }
     } else {
-      return res.status(400).send({ error: "Incorrect email or password" });
+      return res.status(200).send({ error: "Incorrect email or password" });
     }
   });
 }else{
