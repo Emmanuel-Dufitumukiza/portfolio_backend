@@ -34,14 +34,15 @@ const blogSchema = mongoose.Schema({
 module.exports = mongoose.model("Blog", blogSchema);
 
 const schema = Joi.object({
-    title: Joi.string().min(2).max(80).required(),
-    text: Joi.string().min(3).max(1000).required(),
+    title: Joi.string().min(2).max(180).required(),
+    text: Joi.string().min(3).max(1500).required(),
     filePublicId: Joi.string().min(2).max(150).required(),
-    fileUrl: Joi.string().min(4).max(70).required()
+    fileUrl: Joi.string().min(4).max(270).required()
 });
 
 const validateBlog = async(req,res,next)=>{
     try {
+        console.log(req.body)
         let {title,text,filePublicId,fileUrl} = req.body;
 
         const {error} = await schema.validateAsync({
@@ -50,7 +51,7 @@ const validateBlog = async(req,res,next)=>{
             filePublicId: filePublicId,
             fileUrl: fileUrl
         });
-
+console.log(error)
         if(!error)
         return next();
     }
