@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start": "node index.js",
-    "test": "mocha --timeout 20000",
+    "test": "mocha --timeout 20000 --exit",
     "coverage": "nyc --reporter=text npm run test"
   },
   "dependencies": {
