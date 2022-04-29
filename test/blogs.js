@@ -146,7 +146,7 @@ describe("Blogs API", ()=>{
             const blog = {
                 title: "NodeJS Framework",
                 text: "hjgkjfsjlkgkksglkssgs",
-                fileUrl: "https://cloudinary/images/hjfaaj",
+                fileUrl: "https://res.cloudinary.com/duldhdjsj/image/upload/v1651158611/kg6tedsdg64ugw7fjzbm.webp",
                 filePublicId: "gkjsgklslkgs"
             }
             const id = "6268385d85375fcecaddbbcd"
@@ -163,7 +163,6 @@ describe("Blogs API", ()=>{
                 response.body.should.have.property("text").eq("hjgkjfsjlkgkksglkssgs");
                 response.body.should.have.property("likes");
                 response.body.should.have.property("comments");
-                response.body.should.have.property("fileUrl").eq("https://cloudinary/images/hjfaaj");
                 response.body.should.have.property("filePublicId").eq("gkjsgklslkgs");
             done();
             })
