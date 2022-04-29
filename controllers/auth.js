@@ -52,7 +52,7 @@ if(req.body){
           { userId },
           "e-portfolio-2022-api-tkn"
         );
-
+console.log(result)
         return res.send({ error: false, token: token, user: result });
       } else {
         return res.status(200).send({ error: "Incorrect email or password" });
@@ -75,6 +75,15 @@ exports.getUser = async (req, res) => {
       return res.status(404).send(error.message);
     }
 };
+
+exports.getUserInfo = async(req,res)=>{
+  try {
+    const user = await User.findById(req.user);
+    return res.status(200).send(user);
+  } catch (error) {
+    return res.status(404).send(error.message);
+  }
+}
 
 exports.getAllUsers = async (req, res) => {
   try{

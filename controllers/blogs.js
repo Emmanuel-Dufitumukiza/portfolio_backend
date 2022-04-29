@@ -24,7 +24,7 @@ console.log(req.body)
 
 exports.getBlogs = async(req,res)=>{
     try{
-     let blogs = await Blog.find();
+     let blogs = await Blog.find({}).sort({'updatedAt': -1});
      return res.send(blogs);
     }
     catch(error){
