@@ -39,13 +39,13 @@ describe("Blogs API", ()=>{
 
      describe("GET /api/blogs/:id", ()=>{
         it("It should GET single blog by ID", (done)=>{
-            let id = "626bb8970153e82517025759";
+            let id = "626839ab85375fcecaddbbd2";
             chai.request(server)
             .get("/api/blogs/" + id)
             .end((err, response)=>{
                 response.should.have.status(200);
                 response.body.should.be.a("object");
-                response.body.should.have.property("_id").eq("626bb8970153e82517025759");
+                response.body.should.have.property("_id").eq("626839ab85375fcecaddbbd2");
                 response.body.should.have.property("title");
                 response.body.should.have.property("text");
                 response.body.should.have.property("likes");
@@ -149,7 +149,7 @@ describe("Blogs API", ()=>{
                 fileUrl: "https://cloudinary/images/hjfaaj",
                 filePublicId: "gkjsgklslkgs"
             }
-            const id = "626bb8970153e82517025759"
+            const id = "626839ab85375fcecaddbbd2"
             const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjU0NjEyZDY4YzQyNTRlZmNmYWYzY2UiLCJpYXQiOjE2NDk5NDI4NDZ9.fysAvT-Ambpy9TK5VfFx1K014dTNeHAn6MucxohctCQ";
             chai.request(server)
             .patch("/api/blogs/"+id)
@@ -196,7 +196,7 @@ describe("Blogs API", ()=>{
                 fileUrl: "https://cloudinary/images/hjfaaj",
                 filePublicId: "gkjsgklslkgs"
             }
-            const id = "626bb8970153e82517025759"
+            const id = "626839ab85375fcecaddbbd2"
             const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjU0NjEyZDY4YzQyNTRlZmNmYWYzY2UiLCJpYXQiOjE2NDk5NDI4NDZ9.fysAvT-Ambpy9TK5VfFx1K014dTNeHAn6MucxohctCQ";
             chai.request(server)
             .patch("/api/blogs/"+id)
@@ -216,7 +216,7 @@ describe("Blogs API", ()=>{
                 fileUrl: "https://cloudinary/images/hjfaaj",
                 filePublicId: "gkjsgklslkgs"
             }
-            const id = "626bb8970153e82517025759"
+            const id = "626839ab85375fcecaddbbd2"
             chai.request(server)
             .patch("/api/blogs/"+id)
             .send(blog)
@@ -234,7 +234,7 @@ describe("Blogs API", ()=>{
                 fileUrl: "https://cloudinary/images/hjfaaj",
                 filePublicId: "gkjsgklslkgs"
             }
-            const id = "626bb8970153e82517025759"
+            const id = "626839ab85375fcecaddbbd2"
             const token = "dfjkhdfl;hhss.sdkjlkshshsh.jgjsdhlks";
             chai.request(server)
             .patch("/api/blogs/"+id)
@@ -255,7 +255,7 @@ describe("Blogs API", ()=>{
 
      describe("DELETE /api/blogs/delete/:id", ()=>{
         // it("It should DELETE an existing blog", (done)=>{
-        //     let id = "626bb8970153e82517025759";
+        //     let id = "626839ab85375fcecaddbbd2";
         //     const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjU0NjEyZDY4YzQyNTRlZmNmYWYzY2UiLCJpYXQiOjE2NDk5NDI4NDZ9.fysAvT-Ambpy9TK5VfFx1K014dTNeHAn6MucxohctCQ";
         //     chai.request(server)
         //     .delete("/api/blogs/delete/" + id)
@@ -281,7 +281,7 @@ describe("Blogs API", ()=>{
         });
 
         it("It should NOT DELETE blog without token ", (done)=>{
-            let id = "626bb8970153e82517025759";
+            let id = "626839ab85375fcecaddbbd2";
             chai.request(server)
             .delete("/api/blogs/delete/" + id)
             .end((err, response)=>{
@@ -292,7 +292,7 @@ describe("Blogs API", ()=>{
         });
 
         it("It should NOT DELETE blog with invalid token ", (done)=>{
-            let id = "626bb8970153e82517025759";
+            let id = "626839ab85375fcecaddbbd2";
             const token = "eyJhbGciOiJIUz0NjEyZDY4YzQyNTRlZmNmYWYzYJpYXQiOjE2NDk5NDI4NDZ9.fysAvT-Ambpy9TK5VfFx1K014dTNeHAn6MucxohctCQ";
             chai.request(server)
             .delete("/api/blogs/delete/" + id)
@@ -313,7 +313,7 @@ describe("Blogs API", ()=>{
 
  describe("PATCH /api/blogs/like/:userId/:blogId", ()=>{
     it("It should Like an existing blog", (done)=>{
-        let id = "626bb8970153e82517025759";
+        let id = "626839ab85375fcecaddbbd2";
         let userId = "62505c35c6766aff52b87fec";
         const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjU0NjEyZDY4YzQyNTRlZmNmYWYzY2UiLCJpYXQiOjE2NDk5NDI4NDZ9.fysAvT-Ambpy9TK5VfFx1K014dTNeHAn6MucxohctCQ";
         chai.request(server)
@@ -326,7 +326,7 @@ describe("Blogs API", ()=>{
     });
 
     it("It should Not Like an existing blog without token", (done)=>{
-        let id = "626bb8970153e82517025759";
+        let id = "626839ab85375fcecaddbbd2";
         let userId = "62505c35c6766aff52b87fec";
         chai.request(server)
         .patch("/api/blogs/like/" + userId +"/"+id)
@@ -338,7 +338,7 @@ describe("Blogs API", ()=>{
     });
 
     it("It should Not Like an existing blog with invalid token", (done)=>{
-        let id = "626bb8970153e82517025759";
+        let id = "626839ab85375fcecaddbbd2";
         let userId = "62505c35c6766aff52b87fec";
         const token = "eyJhbGcYzQyNTRlZmNmYWYzY2UiLCJpYXQiOjE5VfFx1K014dTNeHAn6MucxohctCQ";
         chai.request(server)
@@ -358,7 +358,7 @@ describe("Blogs API", ()=>{
 
  describe("PATCH /api/blogs/comment/:blogId", ()=>{
     it("It should Add comment an existing blog", (done)=>{
-        let id = "626bb8970153e82517025759";
+        let id = "626839ab85375fcecaddbbd2";
         let comment = [
             {
             userId: "62505c35c6766aff52b87fec",
@@ -379,7 +379,7 @@ describe("Blogs API", ()=>{
     });
 
     it("It should Not Comment an existing blog without token", (done)=>{
-        let id = "626bb8970153e82517025759";
+        let id = "626839ab85375fcecaddbbd2";
         let comment = [
             {
             userId: "62505c35c6766aff52b87fec",
@@ -398,7 +398,7 @@ describe("Blogs API", ()=>{
     });
 
     it("It should Not Comment an existing blog with invalid token", (done)=>{
-        let id = "626bb8970153e82517025759";
+        let id = "626839ab85375fcecaddbbd2";
         let comment = [
             {
             userId: "62505c35c6766aff52b87fec",
