@@ -35,7 +35,7 @@ module.exports = mongoose.model("Blog", blogSchema);
 
 const schema = Joi.object({
     title: Joi.string().min(2).max(180).required(),
-    text: Joi.string().min(3).max(4000).required(),
+    text: Joi.string().min(3).max(8000).required(),
     filePublicId: Joi.string().min(2).max(150).required(),
     fileUrl: Joi.string().min(4).max(370).required()
 });
