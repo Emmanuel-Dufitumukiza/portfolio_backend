@@ -1,5 +1,5 @@
 const express = require("express");
-const { getBlogs, createBlog, updateBlog, deleteBlog, singleBlog, likeBlog, commentBlog } = require("../controllers/blogs");
+const { getBlogs, createBlog, updateBlog, deleteBlog, singleBlog, likeBlog, commentBlog,deleteComment } = require("../controllers/blogs");
 const authCheck = require("../middlewares/authCheck,");
 const { validateBlog } = require("../models/blogs");
 const router = express.Router();
@@ -11,5 +11,6 @@ router.delete("/blogs/delete/:id",authCheck, deleteBlog)
 router.get("/blogs/:id", singleBlog);
 router.patch("/blogs/like/:userId/:blogId",authCheck,likeBlog);
 router.patch("/blogs/comment/:blogId",authCheck,commentBlog);
+router.patch("/blogs/comments/delete", authCheck, deleteComment);
 
 module.exports = router;

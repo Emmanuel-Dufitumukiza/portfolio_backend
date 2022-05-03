@@ -52,7 +52,7 @@ if(req.body){
           { userId },
           "e-portfolio-2022-api-tkn"
         );
-console.log(result)
+
         return res.send({ error: false, token: token, user: result });
       } else {
         return res.status(200).send({ error: "Incorrect email or password" });
@@ -87,7 +87,7 @@ exports.getUserInfo = async(req,res)=>{
 
 exports.getAllUsers = async (req, res) => {
   try{
-     let users = await User.find({});
+     let users = await User.find({}).sort({"createdAt": -1});
      res.status(200).send(users);
  }
  catch(error){
@@ -97,8 +97,8 @@ exports.getAllUsers = async (req, res) => {
 };
 
 exports.updateUser = async(req,res)=>{
+ 
   try{
-
     let user = await User.findOne({_id: req.params.id});
     
     if(req.body.username){
@@ -114,7 +114,7 @@ exports.updateUser = async(req,res)=>{
       const valid = bcrypt.compareSync(`${req.body.currentPassword}`, user.password);
 
       if(!valid){
-        return res.status(400).send({error: "Current Password Is incorrect"})
+        return res.status(200).send({error: "Current Password Is incorrect"})
       }
 
       const salt = bcrypt.genSaltSync(10);
@@ -130,7 +130,6 @@ exports.updateUser = async(req,res)=>{
     await user.save();
 
     return res.send({user: user});
-
 }
 catch(error){
     console.log(error)

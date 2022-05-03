@@ -24,7 +24,7 @@ console.log(req.body)
 
 exports.getBlogs = async(req,res)=>{
     try{
-     let blogs = await Blog.find({}).sort({'updatedAt': -1});
+     let blogs = await Blog.find({}).sort({'createdAt': -1});
      return res.send(blogs);
     }
     catch(error){
@@ -83,15 +83,34 @@ exports.likeBlog = async(req,res)=>{
        });
  
        return res.send("Like added successfully!");
-      }
-      
-      return res.send();
+      }else{
+        await Blog.updateOne({_id: req.params.blogId},{
+          $pull: {likes: req.params.userId}
+        });
 
+       return res.send("Like removed successfully!");
+
+      }
     }
     
     return res.status(400).send({error: "Blog does not exist"});
   }
   catch(error){
+    return res.status(400).send({error: "Blog does not exist"});
+  }
+}
+
+exports.deleteComment = async(req,res)=>{
+  
+  try{
+    await Blog.findOneAndUpdate({_id: req.body.blogId}, {
+      $pull: {comments: {_id: req.body.id}}
+    });
+
+    return res.send("Comment deleted");
+  }
+  catch(error){
+    console.log(error)
     return res.status(400).send({error: "Blog does not exist"});
   }
 }

@@ -25,6 +25,10 @@ const blogSchema = mongoose.Schema({
         },
         comment: {
             type: String
+        },
+        date: {
+            type: String,
+            default: new Date().toLocaleDateString()
         }
       }
   ],

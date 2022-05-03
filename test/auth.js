@@ -39,26 +39,39 @@ describe("Authentication API", ()=>{
             })
         })
 
-        it("It should NOT GET all users who have an account without token", (done)=>{
+        it("It should GET logged in user", (done)=>{
+            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjU4NGExNmEyZjRjZTUzNGE4YWU3OGYiLCJpYXQiOjE2NTA0NzI1NTJ9.XvaHajfmaslvNqlD40TcooK7lLi9IOvs3fox0qnvgZc";
+
             chai.request(server)
-            .get("/api/users")
+            .get("/api/getLoggedUser")
+            .set({ Authorization: `${token}`})
             .end((err, response)=>{
-                response.should.have.status(400);
-                response.text.should.be.eq("Access Denied! You need to login first");
+                response.should.have.status(200);
+                response.body.should.be.a("object");
             done();
             })
         })
 
-        
-        it("It should NOT GET all users who have an account with invalid token", (done)=>{
-            const token = "eyJhbGciOiJIUzI14YWU3OGYiLCJpYXQiOjE2NTA0NzI1NTJ9.XvaHajfmaslvNqlD40TcooK7lLi9IOvs3fox0qnvgZc";
+        it("It should Not GET logged in user with invalid token", (done)=>{
+            const token = "eyJhbGciOiJIUzI1NiIsInWQiOiI2MjU4NGExNmEyZjRjZTUzNGE4YWU3OGYiLCJpYXQiOjE2NTA0NzI1NTJ9.XvaHajfmaslvNqlD40TcooK7lLi9IOvs3fox0qnvgZc";
 
             chai.request(server)
-            .get("/api/users")
+            .get("/api/getLoggedUser")
             .set({ Authorization: `${token}`})
             .end((err, response)=>{
                 response.should.have.status(400);
                 response.text.should.be.eq("Invalid Token");
+            done();
+            })
+        })
+
+        it("It should Not GET logged in user without token", (done)=>{
+
+            chai.request(server)
+            .get("/api/getLoggedUser")
+            .end((err, response)=>{
+                response.should.have.status(400);
+                response.text.should.be.eq("Access Denied! You need to login first");
             done();
             })
         })

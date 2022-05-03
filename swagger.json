@@ -336,6 +336,33 @@
           }
         }
       },
+      "/api/getLoggedUser": {
+        "get": {
+          "tags": ["Users"],
+          "summary": "Get loggedin user",
+          "description": "Get credentials of logged in user using token",
+          "produces": ["application/json"],
+          "parameters": [
+              {
+                "in": "header",
+                "name": "Authorization",
+                "description": "bearer token for user authorization",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation"
+            },
+            "400": {
+              "description": "bad request"
+            }
+          }
+        }
+      },
       "/api/users/update/{id}": {
         "patch": {
           "tags": ["Users"],
@@ -485,6 +512,33 @@
             },
             "404": {
               "description": "Not found"
+            }
+          }
+        }
+      },
+      "/api/getMessages": {
+        "get": {
+          "tags": ["Contact Message"],
+          "summary": "Get sent contact messages",
+          "description": "Get sent contact messages",
+          "produces": ["application/json"],
+          "parameters": [
+              {
+                "in": "header",
+                "name": "Authorization",
+                "description": "bearer token for user authorization",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation"
+            },
+            "400": {
+              "description": "bad request"
             }
           }
         }
