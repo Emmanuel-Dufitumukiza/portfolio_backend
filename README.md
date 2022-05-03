@@ -1,7 +1,5 @@
 [![CircleCI](https://circleci.com/gh/Emmanuel-Dufitumukiza/portfolio_backend.svg?style=shield)](https://circleci.com/gh/circleci/circleci-docs)
 
-[![codecov.io](https://codecov.io/github/Emmanuel-Dufitumukiza/portfolio_backend/coverage.svg?branch=main)](https://codecov.io/github/Emmanuel-Dufitumukiza/portfolio_backend)
-
 <div align="center">
   <h3 align="center">Portfolio Backend</h3>
 </div>

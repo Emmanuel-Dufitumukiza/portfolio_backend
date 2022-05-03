@@ -2,7 +2,7 @@
   "scripts": {
     "start": "node index.js",
     "test": "mocha --timeout 10000 --exit",
-    "coverage": "nyc --reporter=text npm run test"
+    "coverage": "nyc --reporter=lcov --reporter=text npm test"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
