@@ -1,5 +1,7 @@
 [![CircleCI](https://circleci.com/gh/Emmanuel-Dufitumukiza/portfolio_backend.svg?style=shield)](https://circleci.com/gh/circleci/circleci-docs)
 
+[![Coverage Status](https://coveralls.io/repos/github/Emmanuel-Dufitumukiza/portfolio_backend/badge.svg?branch=main)](https://coveralls.io/github/Emmanuel-Dufitumukiza/portfolio_backend?branch=main)
+
 <div align="center">
   <h3 align="center">Portfolio Backend</h3>
 </div>
