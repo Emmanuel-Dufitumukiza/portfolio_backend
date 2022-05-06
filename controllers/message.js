@@ -1,4 +1,5 @@
 const Messages = require("../models/messages");
+const User = require("../models/user.js");
 
 exports.sendMessage = async(req,res)=>{
     try{
@@ -14,6 +15,11 @@ exports.sendMessage = async(req,res)=>{
 
 exports.getMessages = async(req,res)=>{
     try{
+       let info = await User.findOne({_id: req.user});
+
+       if(info.role != "padmin"){
+           return res.status(400).send("You are not allowed to get contact messages");
+       }
        let msg = await Messages.find();
        
        return res.send({msg: msg});

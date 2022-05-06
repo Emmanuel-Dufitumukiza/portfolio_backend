@@ -5,12 +5,12 @@ const { validateBlog } = require("../models/blogs");
 const router = express.Router();
 
 router.get("/blogs", getBlogs);
-router.post("/blogs/new",authCheck,validateBlog,createBlog);
+router.post("/blogs",authCheck,validateBlog,createBlog);
 router.patch("/blogs/:id",authCheck,validateBlog,updateBlog);
-router.delete("/blogs/delete/:id",authCheck, deleteBlog)
+router.delete("/blogs/:id",authCheck, deleteBlog)
 router.get("/blogs/:id", singleBlog);
-router.patch("/blogs/like/:userId/:blogId",authCheck,likeBlog);
-router.patch("/blogs/comment/:blogId",authCheck,commentBlog);
-router.patch("/blogs/comments/delete", authCheck, deleteComment);
+router.patch("/blogs/:id/likes",authCheck,likeBlog);
+router.patch("/blogs/:id/comments",authCheck,commentBlog);
+router.delete("/blogs/:id/comments/:commentId", authCheck, deleteComment);
 
 module.exports = router;

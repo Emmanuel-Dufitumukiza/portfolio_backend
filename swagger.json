@@ -42,12 +42,20 @@
     ],
     "schemes": ["https"],
     "paths": {
-      "/api/blogs": {
+      "/api/blogs/{id}": {
         "get": {
           "tags": ["Blogs"],
-          "summary": "Get all blogs",
-          "description": "Get all blogs",
+          "summary": "getting single blog",
+          "description": "get single blog",
           "produces": ["application/json"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "the id of the blog",
+              "required": true
+            }
+          ],
           "responses": {
             "200": {
               "description": "successful operation"
@@ -56,9 +64,62 @@
               "description": "bad request"
             }
           }
-        }
-      },
-      "/api/blogs/delete/{id}": {
+        },
+        "patch": {
+          "tags": ["Blogs"],
+          "summary": "Update existing blog",
+          "description": "Update existing blog",
+          "consumes": ["application/json"],
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "description": "the id of the blog",
+              "required": true
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Update existing blog",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "text": {
+                    "type": "string"
+                  },
+                  "fileUrl": {
+                    "type": "string"
+                  },
+                  "filePublicId": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+              {
+                "in": "header",
+                "name": "Authorization",
+                "description": "bearer token for user authorization",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation"
+            },
+            "400": {
+              "description": "bad request"
+            }
+          }
+        },
         "delete": {
           "tags": ["Blogs"],
           "summary": "Deleting a blog",
@@ -91,7 +152,7 @@
           }
         }
       },
-      "/api/blogs/like/{userId}/{blogId}": {
+      "/api/blogs/{id}/likes": {
         "patch": {
           "tags": ["Blogs"],
           "summary": "Liking a blog",
@@ -100,13 +161,7 @@
           "parameters": [
             {
               "in": "path",
-              "name": "userId",
-              "description": "your id",
-              "required": true
-            },
-            {
-              "in": "path",
-              "name": "blogId",
+              "name": "id",
               "description": "the id of the blog",
               "required": true
             },
@@ -130,16 +185,16 @@
           }
         }
       },
-      "/api/blogs/comment/{blogId}": {
+      "/api/blogs/{id}/comments": {
         "patch": {
           "tags": ["Blogs"],
-          "summary": "Liking a blog",
-          "description": "Liking a blog",
+          "summary": "commenting on blog",
+          "description": "commenting on blog",
           "produces": ["application/json"],
           "parameters": [
             {
               "in": "path",
-              "name": "blogId",
+              "name": "id",
               "description": "the id of the blog",
               "required": true
             },
@@ -151,9 +206,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "userId": {
-                    "type": "string"
-                  },
                   "comment": {
                     "type": "string"
                   }
@@ -180,31 +232,7 @@
           }
         }
       },
-      "/api/blogs/{id}": {
-        "get": {
-            "tags": ["Blogs"],
-            "summary": "getting single blog",
-            "description": "get single blog",
-            "produces": ["application/json"],
-            "parameters": [
-              {
-                "in": "path",
-                "name": "id",
-                "description": "the id of the blog",
-                "required": true
-              }
-            ],
-            "responses": {
-              "200": {
-                "description": "successful operation"
-              },
-              "400": {
-                "description": "bad request"
-              }
-            }
-          }
-      },
-      "/api/blogs/new": {
+      "/api/blogs": {
         "post": {
           "tags": ["Blogs"],
           "summary": "Register new blog",
@@ -253,9 +281,23 @@
               "description": "bad request"
             }
           }
+        },
+          "get": {
+            "tags": ["Blogs"],
+            "summary": "Get all blogs",
+            "description": "Get all blogs",
+            "produces": ["application/json"],
+            "responses": {
+              "200": {
+                "description": "successful operation"
+              },
+              "400": {
+                "description": "bad request"
+              }
+            }
         }
       },
-      "/api/register": {
+      "/api/users": {
         "post": {
           "tags": ["Users"],
           "summary": "Register new user",
@@ -295,9 +337,86 @@
               "description": "Not found"
             }
           }
+        },
+        "get": {
+          "tags": ["Users"],
+          "summary": "Get all users",
+          "description": "Get all users ho have an account",
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "successful operation"
+            },
+            "400": {
+              "description": "bad request"
+            }
+          }
+        },
+        "patch": {
+          "tags": ["Users"],
+          "summary": "Update user",
+          "description": "updating user profile",
+          "consumes": ["application/json"],
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "update user profile",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "required": false
+                  },
+                  "password": {
+                    "type": "string",
+                    "required": false
+                  },
+                  "currentPassword": {
+                    "type": "string"
+                  },
+                  "profileImage": {
+                    "type": "object",
+                    "required": false,
+                    "properties": {
+                      "url": {
+                        "type": "string"
+                      },
+                      "public_id": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "in": "header",
+              "name": "Authorization",
+              "description": "bearer token for user authorization",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation"
+            },
+            "400": {
+              "description": "bad request"
+            },
+            "404": {
+              "description": "Not found"
+            }
+          }
         }
       },
-      "/api/login": {
+      "/api/users/login": {
         "post": {
           "tags": ["Users"],
           "summary": "Login",
@@ -336,7 +455,7 @@
           }
         }
       },
-      "/api/getLoggedUser": {
+      "/api/users/info/loggedinuser": {
         "get": {
           "tags": ["Users"],
           "summary": "Get loggedin user",
@@ -363,62 +482,18 @@
           }
         }
       },
-      "/api/users/update/{id}": {
-        "patch": {
+      "/api/users/{id}": {
+        "get": {
           "tags": ["Users"],
-          "summary": "Update user",
-          "description": "updating user profile",
-          "consumes": ["application/json"],
+          "summary": "getting single user",
+          "description": "get single user",
           "produces": ["application/json"],
           "parameters": [
             {
               "in": "path",
               "name": "id",
-              "description": "the id of the user to update",
+              "description": "the id of the blog",
               "required": true
-            },
-            {
-              "in": "body",
-              "name": "body",
-              "description": "update user profile",
-              "required": true,
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "username": {
-                    "type": "string",
-                    "required": false
-                  },
-                  "password": {
-                    "type": "string",
-                    "required": false
-                  },
-                  "currentPassword": {
-                    "type": "string"
-                  },
-                  "profileImage": {
-                    "type": "object",
-                    "required": false,
-                    "properties": {
-                      "fileUrl": {
-                        "type": "string"
-                      },
-                      "filePublicId": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            {
-              "in": "header",
-              "name": "Authorization",
-              "description": "bearer token for user authorization",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
             }
           ],
           "responses": {
@@ -427,54 +502,11 @@
             },
             "400": {
               "description": "bad request"
-            },
-            "404": {
-              "description": "Not found"
             }
           }
         }
       },
-      "/api/users": {
-        "get": {
-          "tags": ["Users"],
-          "summary": "Get all users",
-          "description": "Get all users ho have an account",
-          "produces": ["application/json"],
-          "responses": {
-            "200": {
-              "description": "successful operation"
-            },
-            "400": {
-              "description": "bad request"
-            }
-          }
-        }
-      },
-      "/api/users/{id}": {
-        "get": {
-            "tags": ["Users"],
-            "summary": "getting single user",
-            "description": "get single user",
-            "produces": ["application/json"],
-            "parameters": [
-              {
-                "in": "path",
-                "name": "id",
-                "description": "the id of the blog",
-                "required": true
-              }
-            ],
-            "responses": {
-              "200": {
-                "description": "successful operation"
-              },
-              "400": {
-                "description": "bad request"
-              }
-            }
-          }
-      },
-      "/api/sendMessage": {
+      "/api/messages": {
         "post": {
           "tags": ["Contact Message"],
           "summary": "Contact Message",
@@ -514,9 +546,7 @@
               "description": "Not found"
             }
           }
-        }
-      },
-      "/api/getMessages": {
+        },
         "get": {
           "tags": ["Contact Message"],
           "summary": "Get sent contact messages",

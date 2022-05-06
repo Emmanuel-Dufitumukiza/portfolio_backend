@@ -71,7 +71,7 @@ describe("Blogs API", ()=>{
      * Test the POST blog route
      */ 
 
-     describe("POST /api/blogs/new", ()=>{
+     describe("POST /api/blogs", ()=>{
         it("It should POST a new blog", (done)=>{
             const blog = {
                 title: "NodeJS Tutorial",
@@ -81,7 +81,7 @@ describe("Blogs API", ()=>{
             }
             const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjU0NjEyZDY4YzQyNTRlZmNmYWYzY2UiLCJpYXQiOjE2NDk5NDI4NDZ9.fysAvT-Ambpy9TK5VfFx1K014dTNeHAn6MucxohctCQ";
             chai.request(server)
-            .post("/api/blogs/new")
+            .post("/api/blogs")
             .send(blog)
             .set({ Authorization: `${token}`})
             .end((err, response)=>{
@@ -107,7 +107,7 @@ describe("Blogs API", ()=>{
             }
 
             chai.request(server)
-            .post("/api/blogs/new")
+            .post("/api/blogs")
             .send(blog)
             .end((err, response)=>{
                 response.should.have.status(400);
@@ -125,7 +125,7 @@ describe("Blogs API", ()=>{
             }
             const token = "dfjkhdfl;hhss.sdkjlkshshsh.jgjsdhlks";
             chai.request(server)
-            .post("/api/blogs/new")
+            .post("/api/blogs")
             .send(blog)
             .set({ Authorization: `${token}`})
             .end((err, response)=>{
@@ -252,7 +252,7 @@ describe("Blogs API", ()=>{
      * Test the DELETE blog route
      */ 
 
-     describe("DELETE /api/blogs/delete/:id", ()=>{
+     describe("DELETE /api/blogs/:id", ()=>{
         // it("It should DELETE an existing blog", (done)=>{
         //     let id = "6268385d85375fcecaddbbcd";
         //     const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjU0NjEyZDY4YzQyNTRlZmNmYWYzY2UiLCJpYXQiOjE2NDk5NDI4NDZ9.fysAvT-Ambpy9TK5VfFx1K014dTNeHAn6MucxohctCQ";
@@ -270,7 +270,7 @@ describe("Blogs API", ()=>{
             let id = "62522342";
             const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjU0NjEyZDY4YzQyNTRlZmNmYWYzY2UiLCJpYXQiOjE2NDk5NDI4NDZ9.fysAvT-Ambpy9TK5VfFx1K014dTNeHAn6MucxohctCQ";
             chai.request(server)
-            .delete("/api/blogs/delete/" + id)
+            .delete("/api/blogs/" + id)
             .set({ Authorization: `${token}`})
             .end((err, response)=>{
                 response.should.have.status(400);
@@ -282,7 +282,7 @@ describe("Blogs API", ()=>{
         it("It should NOT DELETE blog without token ", (done)=>{
             let id = "6268385d85375fcecaddbbcd";
             chai.request(server)
-            .delete("/api/blogs/delete/" + id)
+            .delete("/api/blogs/" + id)
             .end((err, response)=>{
                 response.should.have.status(400);
                 response.text.should.be.eq("Access Denied! You need to login first");
@@ -294,7 +294,7 @@ describe("Blogs API", ()=>{
             let id = "6268385d85375fcecaddbbcd";
             const token = "eyJhbGciOiJIUz0NjEyZDY4YzQyNTRlZmNmYWYzYJpYXQiOjE2NDk5NDI4NDZ9.fysAvT-Ambpy9TK5VfFx1K014dTNeHAn6MucxohctCQ";
             chai.request(server)
-            .delete("/api/blogs/delete/" + id)
+            .delete("/api/blogs/" + id)
             .set({ Authorization: `${token}`})
             .end((err, response)=>{
                 response.should.have.status(400);
@@ -310,13 +310,12 @@ describe("Blogs API", ()=>{
  * Test PATCH Like a blog
  */
 
- describe("PATCH /api/blogs/like/:userId/:blogId", ()=>{
+ describe("PATCH /api/blogs/:blogId/likes", ()=>{
     it("It should Like an existing blog", (done)=>{
         let id = "6268385d85375fcecaddbbcd";
-        let userId = "62505c35c6766aff52b87fec";
         const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjU0NjEyZDY4YzQyNTRlZmNmYWYzY2UiLCJpYXQiOjE2NDk5NDI4NDZ9.fysAvT-Ambpy9TK5VfFx1K014dTNeHAn6MucxohctCQ";
         chai.request(server)
-        .patch("/api/blogs/like/" + userId +"/"+id)
+        .patch("/api/blogs/"+id+"/likes")
         .set({ Authorization: `${token}`})
         .end((err, response)=>{
             response.should.have.status(200);
@@ -326,9 +325,8 @@ describe("Blogs API", ()=>{
 
     it("It should Not Like an existing blog without token", (done)=>{
         let id = "6268385d85375fcecaddbbcd";
-        let userId = "62505c35c6766aff52b87fec";
         chai.request(server)
-        .patch("/api/blogs/like/" + userId +"/"+id)
+        .patch("/api/blogs/"+id+"/likes")
         .end((err, response)=>{
             response.should.have.status(400);
             response.text.should.be.eq("Access Denied! You need to login first");
@@ -338,10 +336,9 @@ describe("Blogs API", ()=>{
 
     it("It should Not Like an existing blog with invalid token", (done)=>{
         let id = "6268385d85375fcecaddbbcd";
-        let userId = "62505c35c6766aff52b87fec";
         const token = "eyJhbGcYzQyNTRlZmNmYWYzY2UiLCJpYXQiOjE5VfFx1K014dTNeHAn6MucxohctCQ";
         chai.request(server)
-        .patch("/api/blogs/like/" + userId +"/"+id)
+        .patch("/api/blogs/"+id+"/likes")
         .set({ Authorization: `${token}`})
         .end((err, response)=>{
             response.should.have.status(400);
@@ -355,19 +352,18 @@ describe("Blogs API", ()=>{
  * Test PATCH Commenting on a blog
  */
 
- describe("PATCH /api/blogs/comment/:blogId", ()=>{
+ describe("PATCH /api/blogs/:blogId/comments", ()=>{
     it("It should Add comment an existing blog", (done)=>{
         let id = "6268385d85375fcecaddbbcd";
         let comment = [
             {
-            userId: "62505c35c6766aff52b87fec",
             comment: "Greate article"
             }
         ]
 
         const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjU0NjEyZDY4YzQyNTRlZmNmYWYzY2UiLCJpYXQiOjE2NDk5NDI4NDZ9.fysAvT-Ambpy9TK5VfFx1K014dTNeHAn6MucxohctCQ";
         chai.request(server)
-        .patch("/api/blogs/comment/"+id)
+        .patch("/api/blogs/"+id+"/comments")
         .send(comment)
         .set({ Authorization: `${token}`})
         .end((err, response)=>{
@@ -381,13 +377,12 @@ describe("Blogs API", ()=>{
         let id = "6268385d85375fcecaddbbcd";
         let comment = [
             {
-            userId: "62505c35c6766aff52b87fec",
             comment: "Greate article"
             }
         ]
 
         chai.request(server)
-        .patch("/api/blogs/comment/"+id)
+        .patch("/api/blogs/"+id+"/comments")
         .send(comment)
         .end((err, response)=>{
             response.should.have.status(400);
@@ -400,14 +395,13 @@ describe("Blogs API", ()=>{
         let id = "6268385d85375fcecaddbbcd";
         let comment = [
             {
-            userId: "62505c35c6766aff52b87fec",
             comment: "Greate article"
             }
         ]
 
         const token = "eyJhbGcYzQyNTRlZmNmYWYzY2UiLCJpYXQiOjE5VfFx1K014dTNeHAn6MucxohctCQ";
         chai.request(server)
-        .patch("/api/blogs/comment/"+id)
+        .patch("/api/blogs/"+id+"/comments")
         .send(comment)
         .set({ Authorization: `${token}`})
         .end((err, response)=>{

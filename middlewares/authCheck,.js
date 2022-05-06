@@ -10,6 +10,7 @@ module.exports = function (req, res, next){
         const TokenArray = token;
         jwt.verify(TokenArray,"e-portfolio-2022-api-tkn",(err, decoded)=>{
             if(decoded){
+            req.user = decoded?.userId;
             return next()
             }
             if(err){

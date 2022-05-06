@@ -1,8 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const blogsRoutes = require("./routes/blogs");
-const authRoutes = require("./routes/auth");
-const messageRoutes = require("./routes/contactMessage");
+const blogsRoutes = require("./routes/blogs.routes");
+const authRoutes = require("./routes/auth.routes");
+const messageRoutes = require("./routes/contactMessage.routes");
 require("dotenv").config();
 const bodyParser = require("body-parser");
 const swaggerUi = require('swagger-ui-express');

@@ -54,14 +54,21 @@ exports.singleBlog = async(req,res)=>{
 
 exports.updateBlog = async(req,res)=>{
   try{
-   let {title,text,filePublicId,fileUrl} = req.body;
 
     const blog = await Blog.findOne({_id: req.params.id });
   
-    blog.title = title;
-    blog.text = text;
-    blog.filePublicId = filePublicId;
-    blog.fileUrl = fileUrl;
+    if(req.body?.title?.trim()?.length >0){
+      blog.title = req.body?.title;
+    }
+    if(req.body?.text?.trim()?.length >0){
+      blog.text = req.body?.text;
+    }
+    if(req.body?.filePublicId?.trim()?.length>0){
+      blog.filePublicId = req.body?.filePublicId;
+    }
+    if(req.body?.fileUrl?.trim()?.length>0){
+      blog.fileUrl = req.body?.fileUrl;
+    }
 
     await blog.save();
     return res.send(blog);
@@ -73,19 +80,19 @@ exports.updateBlog = async(req,res)=>{
 
 exports.likeBlog = async(req,res)=>{
   try{
-    let blog =  await Blog.findOne({_id: req.params.blogId});
+    let blog =  await Blog.findOne({_id: req.params.id});
 
     if(blog){
-      if(!blog?.likes?.includes(req.params.userId)){
+      if(!blog?.likes?.includes(req.user)){
 
-      await Blog.updateOne({_id: req.params.blogId},{
-         $push: {likes: req.params.userId}
+      await Blog.updateOne({_id: req.params.id},{
+         $push: {likes: req.user}
        });
  
        return res.send("Like added successfully!");
       }else{
-        await Blog.updateOne({_id: req.params.blogId},{
-          $pull: {likes: req.params.userId}
+        await Blog.updateOne({_id: req.params.id},{
+          $pull: {likes: req.user}
         });
 
        return res.send("Like removed successfully!");
@@ -101,10 +108,9 @@ exports.likeBlog = async(req,res)=>{
 }
 
 exports.deleteComment = async(req,res)=>{
-  
   try{
-    await Blog.findOneAndUpdate({_id: req.body.blogId}, {
-      $pull: {comments: {_id: req.body.id}}
+    await Blog.findOneAndUpdate({_id: req.params.id}, {
+      $pull: {comments: {_id: req.params.commentId}}
     });
 
     return res.send("Comment deleted");
@@ -117,12 +123,15 @@ exports.deleteComment = async(req,res)=>{
 
 exports.commentBlog = async(req,res)=>{
   try{
-    let blog =  await Blog.findOne({_id: req.params.blogId});
+    let blog =  await Blog.findOne({_id: req.params.id});
 
     if(blog){
 
-      await Blog.updateOne({_id: req.params.blogId},{
-         $push: {comments: req.body}
+      await Blog.updateOne({_id: req.params.id},{
+         $push: {comments: {
+          userId: req.user,
+          comment: req.body.comment
+         }}
        });
  
        return res.send("Comment added successfully!");

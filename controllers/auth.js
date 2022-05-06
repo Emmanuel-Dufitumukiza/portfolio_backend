@@ -24,7 +24,13 @@ exports.Register = async(req,res)=>{
           "e-portfolio-2022-api-tkn"
         );
      
-         return res.status(200).send({user: userInfo,token: token});
+         return res.status(200).send({user: {
+           role: userInfo?.role,
+           email: userInfo?.email,
+           username: userInfo?.username,
+           profileImage: userInfo?.profileImage,
+           _id: userInfo?._id
+         },token: token});
      }else{
          return res.status(200).send({message: `Email had already taken, please try different email address`})
      }
@@ -53,7 +59,13 @@ if(req.body){
           "e-portfolio-2022-api-tkn"
         );
 
-        return res.send({ error: false, token: token, user: result });
+        return res.send({ error: false, token: token, user: {
+        _id: result?._id,
+        email: result?.email,
+        username: result?.username,
+        profileImage: result?.profileImage,
+        role: result?.role
+        } });
       } else {
         return res.status(200).send({ error: "Incorrect email or password" });
       }
@@ -69,8 +81,16 @@ if(req.body){
 exports.getUser = async (req, res) => {
     try {
       const { id } = req.params;
-      const user = await User.findById(id);
-      return res.status(200).send(user);
+      let user = await User.findById(id);
+      let result  = user;
+
+      return res.status(200).send({
+        _id: result?._id,
+        email: result?.email,
+        username: result?.username,
+        profileImage: result?.profileImage,
+        role: result?.role
+      });
     } catch (error) {
       return res.status(404).send(error.message);
     }
@@ -78,8 +98,15 @@ exports.getUser = async (req, res) => {
 
 exports.getUserInfo = async(req,res)=>{
   try {
-    const user = await User.findById(req.user);
-    return res.status(200).send(user);
+    let user = await User.findById(req.user);
+    let result  = user;
+    return res.status(200).send({
+      _id: result?._id,
+      email: result?.email,
+      username: result?.username,
+      profileImage: result?.profileImage,
+      role: result?.role
+    });
   } catch (error) {
     return res.status(404).send(error.message);
   }
@@ -87,7 +114,7 @@ exports.getUserInfo = async(req,res)=>{
 
 exports.getAllUsers = async (req, res) => {
   try{
-     let users = await User.find({}).sort({"createdAt": -1});
+     let users = await User.find({},"-password").sort({"createdAt": -1});
      res.status(200).send(users);
  }
  catch(error){
@@ -99,7 +126,7 @@ exports.getAllUsers = async (req, res) => {
 exports.updateUser = async(req,res)=>{
  
   try{
-    let user = await User.findOne({_id: req.params.id});
+    let user = await User.findOne({_id: req.user});
     
     if(req.body.username){
       user.username = req.body.username;
@@ -127,9 +154,15 @@ exports.updateUser = async(req,res)=>{
       user.password = req.body.password;
     }
 
-    await user.save();
-
-    return res.send({user: user});
+    let result = await user.save();
+    console.log(result)
+    return res.send({user: {
+      _id: result?._id,
+      email: result?.email,
+      username: result?.username,
+      profileImage: result?.profileImage,
+      role: result?.role
+    }});
 }
 catch(error){
     console.log(error)

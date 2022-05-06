@@ -3,7 +3,7 @@ const { sendMessage, getMessages } = require("../controllers/message");
 const authCheck = require("../middlewares/authCheck,");
 const router = express.Router();
 
-router.post("/sendMessage", sendMessage);
-router.get("/getMessages",authCheck,getMessages);
+router.post("/messages", sendMessage);
+router.get("/messages",authCheck,getMessages);
 
 module.exports = router;
