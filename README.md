@@ -2,6 +2,8 @@
   <h3 align="center">Portfolio Backend</h3>
 </div>
 
+[![CircleCI](https://circleci.com/gh/Emmanuel-Dufitumukiza/portfolio_backend.svg?style=shield)](https://circleci.com/gh/circleci/circleci-docs)
+
 ### Installation
 
 1. Clone this repository
